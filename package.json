@@ -1,0 +1,23 @@
+{
+  "name": "job-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npx tsc --watch\" \"node build/main.ts\"",
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "prisma": "^5.14.0",
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
+  }
+}

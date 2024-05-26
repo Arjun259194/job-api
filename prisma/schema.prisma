@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+   provider = "prisma-client-js"
+}
+
+datasource db {
+   provider = "mongodb"
+   url      = env("DATABASE_URL")
+}
+
+enum Gender {
+   Male
+   Female
+   Other
+}
+
+model Employee {
+   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+   empName        String   @unique
+   empEmail       String   @unique
+   empPassword    String
+   dateOfBirth    DateTime
+   mobileNumber   String
+   address        String
+   workLocation   String
+   gender         Gender
+   profilePicture String
+   resume         String
+   bio            String
+   keySkills      String[]
+   empRole        String
+   education      String
+
+   // Relationships (Optional, based on your needs)
+   applications Application[]
+}
+
+model Job {
+   id          String @id @default(auto()) @map("_id") @db.ObjectId
+   title       String
+   role        String
+   industry    String
+   location    String
+   salary      Float
+   experience  String
+   education   String
+   empType     String
+   description String
+
+   // Relationships (Optional, based on your needs)
+   applications Application[]
+   recruiter    Recruiter     @relation(fields: [recId], references: [id])
+   recId        String        @db.ObjectId
+}
+
+model Recruiter {
+   id             String @id @default(auto()) @map("_id") @db.ObjectId
+   recName        String @unique
+   recEmail       String @unique
+   recPassword    String
+   mobileNumber   String
+   profilePicture String
+   companyName    String
+   location       String
+   industry       String
+   bio            String
+
+   //Relationships (Optional, based on your needs)
+   jobs         Job[]
+   applications Application[]
+}
+
+model Application {
+   id     String  @id @default(auto()) @map("_id") @db.ObjectId
+   jobId  String  @db.ObjectId
+   empId  String  @db.ObjectId
+   recId  String  @db.ObjectId
+   status Boolean
+
+   // Relationships (Optional, based on your needs)
+   job       Job       @relation(fields: [jobId], references: [id])
+   employee  Employee  @relation(fields: [empId], references: [id])
+   recruiter Recruiter @relation(fields: [recId], references: [id])
+}
+
+model Admin {
+   id        String @id @default(auto()) @map("_id") @db.ObjectId
+   aName     String @unique
+   aEmail    String @unique
+   aPassword String
+}
