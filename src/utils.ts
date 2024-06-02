@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import z from "zod";
 
-export const getUser = () => {
-
-}
-
 export const getToken = (req: Request) =>
   req.headers.authorization?.split(" ")[1] ||
   (req.cookies["auth"] as string | undefined);
